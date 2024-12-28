@@ -1,41 +1,5 @@
 #!/bin/bash
 
-# GitHub repository details
-REPO_OWNER="Thousif10"
-REPO_NAME="lochost"
-SCRIPT_NAME="lochost.sh"
-
-# Function to check for updates
-check_for_update() {
-    echo -e "\n[+] Checking for updates..."
-    # Fetch the latest version of the script from GitHub
-    LATEST_SCRIPT_URL="https://raw.githubusercontent.com/$REPO_OWNER/$REPO_NAME/main/$SCRIPT_NAME"
-    TEMP_SCRIPT="/tmp/$SCRIPT_NAME"
-
-    # Download the latest version to a temporary location
-    curl -s -o "$TEMP_SCRIPT" "$LATEST_SCRIPT_URL"
-
-    if [ $? -eq 0 ]; then
-        # Compare the downloaded script with the current one
-        if ! cmp -s "$TEMP_SCRIPT" "$0"; then
-            echo "[+] A new version is available. Updating the script..."
-            # Replace the current script with the new version
-            mv "$TEMP_SCRIPT" "$0"
-            chmod +x "$0"
-            echo "[+] Update complete. Please re-run the script."
-            exit 0
-        else
-            echo "[+] You already have the latest version."
-            rm "$TEMP_SCRIPT"
-        fi
-    else
-        echo "[-] Failed to check for updates. Continuing with the current version."
-    fi
-}
-
-# Check for updates
-check_for_update
-
 # Displaying the header and instructions
 echo -e "__________________________________________________                             ";
 echo -e '.          __     __          __    __   _____  ';
@@ -70,21 +34,21 @@ if [[ "$1" = 'http' ]]; then
 
     if [[ $3 = 'change' ]]; then
         ssh -R 80:localhost:$2 `echo -n $(date) | md5sum | cut -c1-8`@localhost.run
-    elif [[ "$3" -gt "1" ]]; then
+      elif [[ "$3" -gt "1" ]]; then
         ssh -R $3:localhost:$2 localhost.run
-    else
+      else [[ $3 = 0 ]];
         ssh -R 80:localhost:$2 localhost.run
     fi
-    echo -e "__________________________________________________                             ";
+echo -e "__________________________________________________                             ";
 fi
 
 if [[ "$1" = 'tcp' ]]; then
 
     if [[ "$3" -gt "1" ]]; then
         ssh -R $3:localhost:$2 localhost.run
-    else
+      else [[ $3 = 0 ]];
         ssh -R 0:localhost:$2 localhost.run
     fi
-    echo -e "__________________________________________________                             ";
+echo -e "__________________________________________________                             ";
 fi
 
