@@ -7,7 +7,7 @@ echo -e ".   |     /  \\   /    |   |  /  \\  /  \`    |     "
 echo -e ".   |           |     |---|        ---     |     "
 echo -e ".   |___  \\__/   \\__  |   |  \\__/  .__/    |     "
 echo -e "__________________________________________________"
-echo -e ".   Localhost Installation Script for proot-distro       "
+echo -e ".          Localhost Installation Script        "
 echo -e "-------------------------------------------------"
 echo -e ". This script installs OpenSSH and required tools"
 echo -e ". to use localhost.run for port forwarding.      "
@@ -47,6 +47,11 @@ apt update && apt upgrade -y
 # Install OpenSSH Server
 echo -e "\n[+] Installing OpenSSH Server..."
 apt install -y openssh-server
+
+# Fix the /run/sshd directory issue
+echo -e "\n[+] Creating /run/sshd directory..."
+mkdir -p /run/sshd
+chmod 0755 /run/sshd
 
 # Start the SSH server manually
 echo -e "\n[+] Starting OpenSSH Server..."
