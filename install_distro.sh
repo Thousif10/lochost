@@ -32,6 +32,7 @@ fi
 
 # Generate SSH key
 echo -e "\n[+] Generating SSH key with the provided email..."
+mkdir -p /root/.ssh
 ssh-keygen -t rsa -C "$email" -f /root/.ssh/id_rsa -N ""
 
 # Display the generated public key
@@ -54,12 +55,12 @@ mkdir -p /run/sshd
 chmod 0755 /run/sshd
 
 # Start the SSH server manually
-echo -e "\n[+] Starting OpenSSH Server..."
+echo -e "\n[+] Starting OpenSSH Server manually..."
 /usr/sbin/sshd
 if pgrep -x "sshd" > /dev/null; then
-    echo "[+] OpenSSH is running."
+    echo "[+] OpenSSH Server is running successfully."
 else
-    echo "[-] Failed to start OpenSSH. Please check manually."
+    echo "[-] Failed to start OpenSSH Server. Please check manually."
     exit 1
 fi
 
