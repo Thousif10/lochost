@@ -50,19 +50,9 @@ echo -e "\n[+] Installing OpenSSH Server..."
 apt install -y openssh-server
 
 # Fix the /run/sshd directory issue
-echo -e "\n[+] Creating /run/sshd directory..."
+echo -e "\n[+] Ensuring /run/sshd directory exists..."
 mkdir -p /run/sshd
 chmod 0755 /run/sshd
-
-# Start the SSH server manually
-echo -e "\n[+] Starting OpenSSH Server manually..."
-/usr/sbin/sshd
-if pgrep -x "sshd" > /dev/null; then
-    echo "[+] OpenSSH Server is running successfully."
-else
-    echo "[-] Failed to start OpenSSH Server. Please check manually."
-    exit 1
-fi
 
 # Install required packages
 echo -e "\n[+] Installing other required tools..."
@@ -77,8 +67,11 @@ echo -e "__________________________________________________"
 echo -e "Signup at https://admin.localhost.run/#/login/email"
 echo -e "and add your SSH key to localhost.run"
 
-# Display instructions for using localhost.run
+# Display instructions for manually starting SSH and using localhost.run
 echo -e "\n[+] Installation complete! You can now use localhost.run."
+echo -e "__________________________________________________"
+echo -e ". To manually start OpenSSH Server, use:"
+echo -e ". /usr/sbin/sshd"
 echo -e "__________________________________________________"
 echo -e ". To forward a local port (e.g., 8080), use:"
 echo -e ". ssh -R 80:localhost:8080 localhost.run"
