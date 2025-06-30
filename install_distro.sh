@@ -43,7 +43,7 @@ echo -e "__________________________________________________"
 
 # Update and upgrade the system
 echo -e "\n[+] Updating and upgrading the system..."
-apt update && apt upgrade -y
+apt update -y
 
 # Install OpenSSH Server
 echo -e "\n[+] Installing OpenSSH Server..."
